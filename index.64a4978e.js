@@ -539,12 +539,16 @@ var _datGui = require("dat.gui");
 var model = new _three.Object3D();
 const airplaneURL = new URL(require("695be40d13e16c3f"));
 const renderer = new _three.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
+// renderer.setSize( window.innerWidth, window.innerHeight );
+renderer.setSize(200, 200);
 renderer.shadowMap.enabled = true;
 renderer.setClearColor(0x333333);
-document.body.appendChild(renderer.domElement);
+const tag = document.getElementById("table3d");
+tag.appendChild(renderer.domElement);
+// document.body.appendChild( renderer.domElement );
 const scene = new _three.Scene();
-const camera = new _three.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+// const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
+const camera = new _three.PerspectiveCamera(20, 1, 0.1, 1000);
 const orbit = new (0, _orbitControlsJs.OrbitControls)(camera, renderer.domElement);
 const axesHelper = new _three.AxesHelper(3);
 scene.add(axesHelper);
@@ -562,46 +566,40 @@ scene.add(plane);
 const gridHelper = new _three.GridHelper(20, 20);
 gridHelper.position.set(0, 1, 0);
 scene.add(gridHelper);
-const gui = new _datGui.GUI();
-const options = {
-    rotateX: 0
-};
-gui.add(options, "rotateX", 0, 1);
-console.log("options", options);
+// const gui = new dat.GUI();
+// const options = {
+//     rotateX: 0
+// }
+// gui.add(options, 'rotateX', 0, 1);
 const ambientLight = new _three.AmbientLight(0x333333);
 scene.add(ambientLight);
-console.log("ambientLight", ambientLight);
 const spotLight = new _three.SpotLight(0xffffff, 0.8);
 spotLight.position.set(-100, 100, 0);
 scene.add(spotLight);
 spotLight.castShadow = true;
-spotLight.angle = options.angle;
-console.log("spotLight", spotLight);
 const assetLoader = new (0, _gltfloaderJs.GLTFLoader)();
 const directionalLight = new _three.DirectionalLight(0xffffff, 0.8);
 directionalLight.position.set(-30, 50, 0);
 directionalLight.castShadow = true;
 directionalLight.shadow.camera.bottom = -30;
 scene.add(directionalLight);
-// const dLightHelper = new THREE.DirectionalLightHelper(directionalLight, 5);
-// scene.add(dLightHelper);
-// const dLightShadowHelper = new THREE.CameraHelper(directionalLight.shadow.camera);
-// scene.add(dLightShadowHelper);
 assetLoader.load(airplaneURL.href, function(gltf) {
     model = gltf.scene;
     scene.add(model);
     model.scale.set(15, 15, 15);
-    model.rotateX(Math.PI * 0.055); // negative is up, 0.0055 is 1 degree
-    model.rotateZ(Math.PI * 0.055); // negative is left, 0.0055 is 1 degree
+    // model.rotateX(Math.PI * 0.055); // pitch, negative is up, 0.0055 is 1 degree
+    // model.rotateZ(Math.PI * 0.055); // roll, negative is left, 0.0055 is 1 degree
     model.position.set(0, 2, -4);
 }, undefined, function(error) {
     console.error(error);
 });
-console.log("model", model);
 renderer.render(scene, camera);
-function animate(time) {
+function update_3dpitch(pitch_angle) {
+    model.rotateX(pitch_angle);
     renderer.render(scene, camera);
-    model.rotateX(options.rotateX);
+}
+function animate(time) {
+    // model.rotateX(options.rotateX)
     renderer.render(scene, camera);
 }
 renderer.setAnimationLoop(animate);
