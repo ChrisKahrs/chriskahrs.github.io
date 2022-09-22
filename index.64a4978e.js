@@ -536,11 +536,12 @@ var _three = require("three");
 var _orbitControlsJs = require("three/examples/jsm/controls/OrbitControls.js");
 var _gltfloaderJs = require("three/examples/jsm/loaders/GLTFLoader.js");
 var _datGui = require("dat.gui");
+var model = new _three.Object3D();
 const airplaneURL = new URL(require("695be40d13e16c3f"));
 const renderer = new _three.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
-renderer.setClearColor(0xffea00);
+renderer.setClearColor(0x333333);
 document.body.appendChild(renderer.domElement);
 const scene = new _three.Scene();
 const camera = new _three.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -549,13 +550,7 @@ const axesHelper = new _three.AxesHelper(3);
 scene.add(axesHelper);
 camera.position.set(-10, 30, 30);
 orbit.update();
-const boxGeometry = new _three.BoxGeometry(1, 1, 1);
-const boxMaterial = new _three.MeshBasicMaterial({
-    color: 0x00ff00
-});
-const box = new _three.Mesh(boxGeometry, boxMaterial);
-scene.add(box);
-const planeGeometry = new _three.PlaneGeometry(30, 30);
+const planeGeometry = new _three.PlaneGeometry(20, 20);
 const planeMaterial = new _three.MeshStandardMaterial({
     color: 0xffffff,
     side: _three.DoubleSide
@@ -564,76 +559,49 @@ const plane = new _three.Mesh(planeGeometry, planeMaterial);
 plane.rotation.x = Math.PI / 2;
 plane.receiveShadow = true;
 scene.add(plane);
-const gridHelper = new _three.GridHelper(30, 30);
+const gridHelper = new _three.GridHelper(20, 20);
+gridHelper.position.set(0, 1, 0);
 scene.add(gridHelper);
-const sphereGeometry = new _three.SphereGeometry(4, 50, 50);
-const sphereMaterial = new _three.MeshStandardMaterial({
-    color: 0x0000ff,
-    wireframe: false
-});
-const sphere = new _three.Mesh(sphereGeometry, sphereMaterial);
-sphere.position.set(-10, 10, 0);
-sphere.castShadow = true;
-scene.add(sphere);
 const gui = new _datGui.GUI();
 const options = {
-    sphereColor: 0xffea00,
-    wireframe: false,
-    speed: 0.01,
-    angle: 0.2,
-    penumbra: 0,
-    intensity: 1
+    rotateX: 0
 };
-gui.add(options, "speed", 0, 0.1);
-gui.add(options, "angle", 0, 1);
-gui.add(options, "penumbra", 0, 1);
-gui.add(options, "intensity", 0, 1);
-gui.addColor(options, "sphereColor").onChange(function(e) {
-    sphere.material.color.set(e);
-});
-gui.add(options, "wireframe").onChange(function(e) {
-    sphere.material.wireframe = e;
-});
-box.rotation.x = 5;
-box.rotation.y = 5;
+gui.add(options, "rotateX", 0, 1);
+console.log("options", options);
 const ambientLight = new _three.AmbientLight(0x333333);
 scene.add(ambientLight);
-// const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-// directionalLight.position.set(-30, 50, 0);
-// directionalLight.castShadow = true;
-// directionalLight.shadow.camera.bottom = -30;
-// scene.add(directionalLight);
-// const dLightHelper = new THREE.DirectionalLightHelper(directionalLight, 5);
-// scene.add(dLightHelper);
-// const dLightShadowHelper = new THREE.CameraHelper(directionalLight.shadow.camera);
-// scene.add(dLightShadowHelper);
+console.log("ambientLight", ambientLight);
 const spotLight = new _three.SpotLight(0xffffff, 0.8);
 spotLight.position.set(-100, 100, 0);
 scene.add(spotLight);
 spotLight.castShadow = true;
 spotLight.angle = options.angle;
-const sLightHelper = new _three.SpotLightHelper(spotLight);
-scene.add(sLightHelper);
+console.log("spotLight", spotLight);
 const assetLoader = new (0, _gltfloaderJs.GLTFLoader)();
+const directionalLight = new _three.DirectionalLight(0xffffff, 0.8);
+directionalLight.position.set(-30, 50, 0);
+directionalLight.castShadow = true;
+directionalLight.shadow.camera.bottom = -30;
+scene.add(directionalLight);
+// const dLightHelper = new THREE.DirectionalLightHelper(directionalLight, 5);
+// scene.add(dLightHelper);
+// const dLightShadowHelper = new THREE.CameraHelper(directionalLight.shadow.camera);
+// scene.add(dLightShadowHelper);
 assetLoader.load(airplaneURL.href, function(gltf) {
-    const model = gltf.scene;
+    model = gltf.scene;
     scene.add(model);
-    model.position.set(-1, 1, 1);
+    model.scale.set(15, 15, 15);
+    model.rotateX(Math.PI * 0.055); // negative is up, 0.0055 is 1 degree
+    model.rotateZ(Math.PI * 0.055); // negative is left, 0.0055 is 1 degree
+    model.position.set(0, 2, -4);
 }, undefined, function(error) {
     console.error(error);
 });
-let step = 0;
+console.log("model", model);
 renderer.render(scene, camera);
 function animate(time) {
-    box.rotation.x += time / 10000000;
-    box.rotation.y += time / 10000000;
     renderer.render(scene, camera);
-    step += options.speed;
-    sphere.position.y = 10 * Math.abs(Math.sin(step));
-    spotLight.angle = options.angle;
-    spotLight.penumbra = options.penumbra;
-    spotLight.intensity = options.intensity;
-    sLightHelper.update();
+    model.rotateX(options.rotateX);
     renderer.render(scene, camera);
 }
 renderer.setAnimationLoop(animate);
