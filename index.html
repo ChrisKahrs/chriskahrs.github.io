@@ -3,7 +3,7 @@
 
 <head>
     <title>Aircraft Visualizer</title>
-
+    <script src="/index.64a4978e.js" defer=""></script>
     <script language="JavaScript">// Grab any URL parameters that were provided
 const params = new URLSearchParams(window.location.search);
 const darkMode = params.get("_theme") === "dark";
@@ -55,6 +55,7 @@ function updateVisualizer() {
     const airspeedTarget = document.getElementById("airspeedTarget");
     const altitudeTarget = document.getElementById("altitudeTarget");
     const yaw = document.getElementById("yaw");
+    const table3d = document.getElementById("table3d");
     var jsonData = JSON.parse(event.data);
     height = jsonData["state"]["aircraftAltitude"];
     speed = jsonData["state"]["aircraftSpeed"];
@@ -69,7 +70,8 @@ function updateVisualizer() {
     // var jsonString = JSON.stringify(jsonData, null, 4);
     // Radians * 180 / Math.Pi. The gauges should be able to show -180 to +180 degrees
     pitch_angle = jsonData["state"]["aircraftPitch"] * 180 / Math.PI;
-    update_3dpitch(pitch_angle);
+    // table3d.
+    update_table3d(pitch_angle);
     roll_angle = jsonData["state"]["aircraftRoll"] * 180 / Math.PI;
     bgImg.setAttribute("transform", "translate (50," + (50 + pitch_angle) + ") rotate(" + roll_angle + ",100,100)");
     pitch.innerText = "Pitch: " + pitch_angle.toFixed(3);
@@ -327,7 +329,7 @@ body {
         </tr>
     </table>
 
-    <script src="/index.64a4978e.js" defer=""></script>
+
 
     <br><br><br><br>
 
