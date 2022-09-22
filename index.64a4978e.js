@@ -566,11 +566,11 @@ scene.add(plane);
 const gridHelper = new _three.GridHelper(20, 20);
 gridHelper.position.set(0, 1, 0);
 scene.add(gridHelper);
-// const gui = new dat.GUI();
-// const options = {
-//     rotateX: 0
-// }
-// gui.add(options, 'rotateX', 0, 1);
+const gui = new _datGui.GUI();
+const options = {
+    rotateX: 0
+};
+gui.add(options, "rotateX", 0, 1);
 const ambientLight = new _three.AmbientLight(0x333333);
 scene.add(ambientLight);
 const spotLight = new _three.SpotLight(0xffffff, 0.8);
@@ -594,12 +594,13 @@ assetLoader.load(airplaneURL.href, function(gltf) {
     console.error(error);
 });
 renderer.render(scene, camera);
-function update_3dpitch(pitch_angle) {
-    model.rotateX(pitch_angle);
+window.addEventListener("message", update_3dpitch, false);
+function update_3dpitch() {
+    model.rotateX(event.data["state"]["pitch"] * 0.0055);
     renderer.render(scene, camera);
 }
 function animate(time) {
-    // model.rotateX(options.rotateX)
+    model.rotateX(options.rotateX);
     renderer.render(scene, camera);
 }
 renderer.setAnimationLoop(animate);
