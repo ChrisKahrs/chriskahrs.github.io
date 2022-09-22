@@ -71,7 +71,7 @@ function updateVisualizer() {
     // Radians * 180 / Math.Pi. The gauges should be able to show -180 to +180 degrees
     pitch_angle = jsonData["state"]["aircraftPitch"] * 180 / Math.PI;
     // table3d.
-    update_table3d(pitch_angle);
+    update_3dpitch(pitch_angle);
     roll_angle = jsonData["state"]["aircraftRoll"] * 180 / Math.PI;
     bgImg.setAttribute("transform", "translate (50," + (50 + pitch_angle) + ") rotate(" + roll_angle + ",100,100)");
     pitch.innerText = "Pitch: " + pitch_angle.toFixed(3);
