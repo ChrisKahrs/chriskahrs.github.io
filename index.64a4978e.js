@@ -596,7 +596,7 @@ assetLoader.load(airplaneURL.href, function(gltf) {
 renderer.render(scene, camera);
 window.addEventListener("message", update_3dpitch, false);
 function update_3dpitch() {
-    model.rotateX(event.data["state"]["pitch"] * 0.0055);
+    model.rotateX(event.data["state"]["aircarftPitch"] * 0.0055);
     renderer.render(scene, camera);
 }
 function animate(time) {
