@@ -78,7 +78,7 @@ assetLoader.load(airplaneURL.href, function(gltf) {
 
 renderer.render( scene, camera );
 function init() {
-    // window.addEventListener('message', update_3dpitch, false);
+    window.addEventListener('message', update_3dpitch, false);
 }
 
 window.onload = init;
