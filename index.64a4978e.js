@@ -599,7 +599,8 @@ function init() {
 }
 window.onload = init;
 function update_3dpitch() {
-    // model.rotateX(event.data['state']['aircarftPitch'] * 0.0055);
+    data = JSON.parse(event.data);
+    model.rotateX(data["state"]["aircraftPitch"] * 0.0055);
     console.log("event: " + event);
     renderer.render(scene, camera);
 }
