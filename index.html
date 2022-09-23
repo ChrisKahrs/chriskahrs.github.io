@@ -72,6 +72,10 @@ function updateVisualizer() {
     pitch_angle = jsonData["state"]["aircraftPitch"] * 180 / Math.PI;
     roll_angle = jsonData["state"]["aircraftRoll"] * 180 / Math.PI;
     bgImg.setAttribute("transform", "translate (50," + (50 + pitch_angle) + ") rotate(" + roll_angle + ",100,100)");
+    const event2 = new CustomEvent("update3d", {
+        detail: jsonData
+    });
+    table3d.dispatchEvent(event2);
     pitch.innerText = "Pitch: " + pitch_angle.toFixed(3);
     roll.innerText = "Roll: " + roll_angle.toFixed(3);
     yaw.innerText = "Yaw: " + jsonData["state"]["aircraftYaw"].toFixed(3);
