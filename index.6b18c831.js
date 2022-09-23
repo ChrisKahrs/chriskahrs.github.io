@@ -603,7 +603,7 @@ function init() {
 window.onload = init;
 function update_3dpitch(data) {
     console.log("data: " + data);
-    // data = JSON.parse(data);
+    data = JSON.parse(data);
     model.rotateX(data["state"]["aircraftPitch"] * 10 * 0.0055);
     console.log("event: " + data);
     renderer.render(scene, camera);
