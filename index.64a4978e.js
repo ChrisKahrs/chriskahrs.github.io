@@ -594,9 +594,13 @@ assetLoader.load(airplaneURL.href, function(gltf) {
     console.error(error);
 });
 renderer.render(scene, camera);
-window.addEventListener("message", update_3dpitch, false);
+function init() {
+    window.addEventListener("message", update_3dpitch, false);
+}
+window.onload = init;
 function update_3dpitch() {
-    model.rotateX(event.data["state"]["aircarftPitch"] * 0.0055);
+    // model.rotateX(event.data['state']['aircarftPitch'] * 0.0055);
+    console.log("event: " + event);
     renderer.render(scene, camera);
 }
 function animate(time) {
