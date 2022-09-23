@@ -90,7 +90,8 @@ function update_3dpitch() {
     model.rotateX(data['state']['aircraftPitch'] * 10 * 0.0055);
     console.log("event2: " + event);
     renderer.render( scene, camera );
-    } catch (e) {
+    } 
+    catch (e) {
         console.log("error: " + e);
     }   
 }
