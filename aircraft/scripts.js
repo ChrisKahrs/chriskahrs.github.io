@@ -78,17 +78,21 @@ assetLoader.load(airplaneURL.href, function(gltf) {
 
 renderer.render( scene, camera );
 function init() {
-    window.addEventListener('message', update_3dpitch, false);
+    // window.addEventListener('message', update_3dpitch, false);
 }
 
 window.onload = init;
 
 function update_3dpitch() {
+    try { 
     console.log("event1: " + event);
     data = JSON.parse(event.data);
     model.rotateX(data['state']['aircraftPitch'] * 10 * 0.0055);
     console.log("event2: " + event);
     renderer.render( scene, camera );
+    } catch (e) {
+        console.log("error: " + e);
+    }   
 }
 
 function animate(time) {
