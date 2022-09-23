@@ -84,9 +84,10 @@ function init() {
 window.onload = init;
 
 function update_3dpitch() {
+    console.log("event1: " + event);
     data = JSON.parse(event.data);
     model.rotateX(data['state']['aircraftPitch'] * 10 * 0.0055);
-    console.log("event: " + event);
+    console.log("event2: " + event);
     renderer.render( scene, camera );
 }
 
