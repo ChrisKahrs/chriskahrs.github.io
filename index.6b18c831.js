@@ -595,13 +595,15 @@ assetLoader.load(airplaneURL.href, function(gltf) {
 });
 renderer.render(scene, camera);
 function init() {
-    window.addEventListener("message", update_3dpitch, false);
+    window.addEventListener("message", function(event) {
+        update_3dpitch(event.data);
+    });
 }
 window.onload = init;
-function update_3dpitch() {
-    data = JSON.parse(event.data);
+function update_3dpitch(data) {
+    data = JSON.parse(data);
     model.rotateX(data["state"]["aircraftPitch"] * 10 * 0.0055);
-    console.log("event: " + event);
+    console.log("event: " + data);
     renderer.render(scene, camera);
 }
 function animate(time) {
