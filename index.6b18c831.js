@@ -598,11 +598,11 @@ assetLoader.load(airplaneURL.href, function(gltf) {
 });
 renderer.render(scene, camera);
 function update_3dpitch(data) {
-    console.log("data: " + data);
-    model.rotateX(Math.PI * 0.5);
-    model.rotateX(data["state"]["aircraftPitch"] * -0.0055);
-    model.rotateZ(Math.PI * 0.5);
-    model.rotateZ(data["state"]["aircraftRoll"] * -0.0055);
+    console.log("pitch: " + data["state"]["aircraftPitch"]);
+    model.rotation.set(0, 0, 0);
+    model.rotateX(data["state"]["aircraftPitch"] * 0.0055);
+    // model.rotateZ(Math.PI * 0.5);
+    // model.rotateZ(data['state']['aircraftRoll'] * -0.0055);
     renderer.render(scene, camera);
 }
 function animate(time) {
