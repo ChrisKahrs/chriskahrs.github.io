@@ -600,8 +600,8 @@ renderer.render(scene, camera);
 function update_3dpitch(pitch_angle1, roll_angle1) {
     console.log("pitch: " + pitch_angle1 + " roll: " + roll_angle1);
     model.rotation.set(0, 0, 0);
-    model.rotateX(pitch_angle1 * 0.0055);
-    model.rotateZ(roll_angle1 * -0.0055);
+    model.rotateX(_three.Math.degToRad(pitch_angle1));
+    model.rotateZ(_three.Math.degToRad(roll_angle1));
     renderer.render(scene, camera);
 }
 function animate(time) {
