@@ -685,7 +685,7 @@ function updateVisualizer() {
     pitch.innerText = "Pitch: " + pitch_angle.toFixed(3);
     roll.innerText = "Roll: " + roll_angle.toFixed(3);
     yaw.innerText = "Yaw: " + jsonData["state"]["aircraftYaw"].toFixed(3);
-    update_3dpitch(pitch_angle, roll_angle);
+    update_3dpitch(pitch_angle, roll_angle, jsonData);
     // airspeed calculations
     airspeed.innerText = "Actual: " + jsonData["state"]["aircraftSpeed"].toFixed(3);
     airspeedTarget.innerText = "Target: " + jsonData["state"]["targetSpeed"].toFixed(3);
