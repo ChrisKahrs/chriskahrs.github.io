@@ -597,12 +597,11 @@ assetLoader.load(airplaneURL.href, function(gltf) {
     console.error(error);
 });
 renderer.render(scene, camera);
-function update_3dpitch(data) {
-    console.log("pitch: " + data["state"]["aircraftPitch"]);
+function update_3dpitch(pitch_angle1, roll_angle1) {
+    console.log("pitch: " + pitch_angle1 + " roll: " + roll_angle1);
     model.rotation.set(0, 0, 0);
-    model.rotateX(data["state"]["aircraftPitch"] * 0.0055);
-    // model.rotateZ(Math.PI * 0.5);
-    // model.rotateZ(data['state']['aircraftRoll'] * -0.0055);
+    model.rotateX(pitch_angle1 * 0.0055);
+    model.rotateZ(roll_angle1 * -0.0055);
     renderer.render(scene, camera);
 }
 function animate(time) {
@@ -685,7 +684,7 @@ function updateVisualizer() {
     pitch.innerText = "Pitch: " + pitch_angle.toFixed(3);
     roll.innerText = "Roll: " + roll_angle.toFixed(3);
     yaw.innerText = "Yaw: " + jsonData["state"]["aircraftYaw"].toFixed(3);
-    update_3dpitch(jsonData);
+    update_3dpitch(pitch_angle, roll_angle);
     // airspeed calculations
     airspeed.innerText = "Actual: " + jsonData["state"]["aircraftSpeed"].toFixed(3);
     airspeedTarget.innerText = "Target: " + jsonData["state"]["targetSpeed"].toFixed(3);
