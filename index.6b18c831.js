@@ -540,7 +540,7 @@ var _gltfloaderJs = require("three/examples/jsm/loaders/GLTFLoader.js");
 // import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/loaders/GLTFLoader.js";
 //  import * as dat from 'dat.gui';
 var model = new _three.Object3D();
-const airplaneURL = new URL(require("222a4e0e0b751697"));
+const airplaneURL = new URL(require("37ae9ffc0e03641d"));
 const renderer = new _three.WebGLRenderer();
 // renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.setSize(200, 200);
@@ -600,7 +600,7 @@ renderer.render(scene, camera);
 function update_3dpitch(pitch_angle1, roll_angle1, jsonData) {
     console.log("pitch: " + pitch_angle1 + " roll: " + roll_angle1);
     model.rotation.set(0, 0, 0);
-    model.rotateX(-jsonData["state"]["aircraftPitch"]);
+    model.rotateX(-jsonData["state"]["aircraftPitch"] / 2);
     model.rotateZ(-jsonData["state"]["aircraftRoll"]);
     // model.rotateZ(THREE.Math.degToRad(roll_angle));
     renderer.render(scene, camera);
@@ -719,7 +719,7 @@ function updateVisualizer() {
     jsonRewardBox.textContent = jsonRewardString;
 }
 
-},{"three/examples/jsm/controls/OrbitControls.js":"7mqRv","three/examples/jsm/loaders/GLTFLoader.js":"dVRsF","222a4e0e0b751697":"4cAcG","three":"ktPTu"}],"7mqRv":[function(require,module,exports) {
+},{"three/examples/jsm/controls/OrbitControls.js":"7mqRv","three/examples/jsm/loaders/GLTFLoader.js":"dVRsF","three":"ktPTu","37ae9ffc0e03641d":"e2iKA"}],"7mqRv":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "OrbitControls", ()=>OrbitControls);
@@ -32795,8 +32795,8 @@ function buildNodeHierarchy(nodeId, parentObject, json, parser) {
     return newGeometry;
 }
 
-},{"three":"ktPTu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"4cAcG":[function(require,module,exports) {
-module.exports = require("./helpers/bundle-url").getBundleURL("5tUvQ") + "airplane_large.598f1243.glb" + "?" + Date.now();
+},{"three":"ktPTu","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"e2iKA":[function(require,module,exports) {
+module.exports = require("./helpers/bundle-url").getBundleURL("5tUvQ") + "airplane.58bd2ff3.glb" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
 "use strict";
