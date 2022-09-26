@@ -600,8 +600,8 @@ renderer.render(scene, camera);
 function update_3dpitch(pitch_angle1, roll_angle1, jsonData) {
     console.log("pitch: " + pitch_angle1 + " roll: " + roll_angle1);
     model.rotation.set(0, 0, 0);
-    model.rotateX(jsonData["state"]["aircraftPitch"]);
-    model.rotateZ(jsonData["state"]["aircraftRoll"]);
+    model.rotateX(-jsonData["state"]["aircraftPitch"]);
+    model.rotateZ(-jsonData["state"]["aircraftRoll"]);
     // model.rotateZ(THREE.Math.degToRad(roll_angle));
     renderer.render(scene, camera);
 }
